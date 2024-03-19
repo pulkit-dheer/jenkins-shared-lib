@@ -1,3 +1,3 @@
 deff call(){
-    sh 'mvn verifiy -DskipUnitTests'
+    sh 'mvn verify -DskipUnitTests'
 }
