@@ -1,6 +1,11 @@
 def call(String project, String ImageTag, String hubUser) {
-    sh """
-    trivy image ${hubUser}/${project}:latest > scan.txt
-    cat scan.txt
-    """
+withCredentials([usernamePassword(
+    credentialsId: 'docker', 
+    passwordVariable: 'PASS', 
+    usernameVariable: 'USER'
+    )]) {
+        sh "docker login -u '$USER' -p '$PASS'"
+}
+        sh "docker image push ${hubUser}/${project}:${ImageTag}"
+        sh "docker image push ${hubUser}/${project}:latest"
 } 
